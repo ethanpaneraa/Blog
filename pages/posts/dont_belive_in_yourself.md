@@ -31,7 +31,7 @@ I knew that I could probably get through the classes and major but I didn't know
 
 ## Battling Self-Doubt
 
-Because I was going through all of these thoughts and emotions, I started to handle these thoughts and emotions in very unhealthy ways. I would stay up late, not eat, and not take care of myself physically or mentally. I would constantly push myself to my limits and view every mistake as a failure. I over committed myself to clubs, research, and classes because I thought that if that's not what I was doing, then I was going to be left behind.
+Because I was going through all of these thoughts and emotions, I started to handle these thoughts and emotions in very unhealthy ways. I would stay up late, not eat, and not take care of myself physically or mentally. I would constantly push myself to my limits and view every mistake as a failure. I over committed myself to clubs, research, and classes because I thought that if that's not what I was doing, then I was going to be left behind. **I became obsessed with the idea of being successful and being the best** that I became a part of the toxic culture that I was trying to avoid.
 
 And so I didn't realize it then, but for the first two years of college, I adopted this mindset of _"I will never be good enough so I have to work harder than everyone else to make up for it."_
 
