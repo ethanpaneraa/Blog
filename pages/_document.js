@@ -2,9 +2,9 @@ import { Html, Head, Main, NextScript } from "next/document";
 
 export default function Document() {
   const meta = {
-    title: "Nextra Blog",
-    description: "Clone and deploy your own Next.js-powered portfolio in minutes.",
-    image: "https://assets.vercel.com/image/upload/q_auto/front/vercel/dps.png",
+    title: "Ethan Pineda Personal Blog",
+    description: "This is my personal blog where I write about my journey as a Computer Science student and Software Engineer. I also write about my personal life and my hobbies. This is my space on the internet.",
+    image: "/public/images/seoImage.jpeg",
   };
 
   return (
@@ -28,4 +28,4 @@ export default function Document() {
       </body>
     </Html>
   );
-}
+}; 

@@ -36,16 +36,16 @@ export default {
   ),
   unstable_faviconGlyph: "👋",
   navs: [
-    {
-      url: "/feed.xml",
-      name: "RSS",
-      "newWindow": true
-    },
-    {
-      url: "https://www.linkedin.com/in/ethanpineda/",
-      name: "Github",
-      "newWindow": true
-    },
+    // {
+    //   url: "/feed.xml",
+    //   name: "RSS",
+    //   "newWindow": true
+    // },
+    // {
+    //   url: "https://www.linkedin.com/in/ethanpineda/",
+    //   name: "Github",
+    //   "newWindow": true
+    // },
   ],
   readMore: 'Read Now',
   postFooter: (
