@@ -12,7 +12,7 @@ author: Ethan Pineda
 
 I don't actually know if many people know that before coming to Northwestern, I wanted to become a doctor. In high school, I was a part of the program "the Northwestern Medicine Scholars Program." It was a program that was supposed to help students from underrepresented backgrounds get into medical school and ultimately, become doctors. I was a part of the program for 3 years, and I was heavily seen and praised as someone that would "make it all the way through." 
 
-I had everything going for myself, I had the grades, the extracurriculars, and the support from my family, friends, and mentors. I was so sure that I was going to go on the path of becoming a path that I didn't even stop to think about if I truly wanted to be a doctor.
+I had everything going for myself, I had the grades, the extracurriculars, and the support from my family, friends, and mentors. I was so sure that I was going to go on the path of becoming a doctor that I didn't even stop to think about if I truly wanted to be a doctor.
 
 It wasn't until everything started to shut down during the COVID pandemic that for the first time in my high school career, I had **time** to fully conceptualize what my future was going to entail if I truly decided to pursue a career in medicine. I realized then, that I wasn't exactly confident that I wanted to be a doctor or that I truly had the commitment and passion to go through with it. 
 
