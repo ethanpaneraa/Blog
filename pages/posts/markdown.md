@@ -8,7 +8,7 @@ author: Ethan Pineda
 
 # "Don't believe in yourself. Believe in the me that believes in you."
 
-## The Great Switch
+## A Change in Direction
 
 I don't actually know if many people know that before coming to Northwestern, I wanted to become a doctor. In high school, I was a part of the program "the Northwestern Medicine Scholars Program." It was a program that was supposed to help students from underrepresented backgrounds get into medical school and ultimately, become doctors. I was a part of the program for 3 years, and I was heavily seen and praised as someone that would "make it all the way through." 
 
@@ -20,7 +20,7 @@ I eventually decided that I wanted to pursue something else but, _I wasn't sure 
 
 For the first time in my life, I truly had no **plan** or real feeling of **control** over my future. I felt like I was failing myself and everyone that had supported me because I was letting go of something that I had worked so hard for.
 
-## 111
+## The Start of It
 
 I decided on a whim that I had just had to pick **something** and see how it goes. So, I decided to take CS 111 in the fall of my freshman year. I struggled, and I wasn't by any means the best student in the class but I wasn't _bad_ at it. 
 
@@ -29,7 +29,7 @@ So, for the sake of feeling like I had some sort of direction, I decided to swit
 I knew that I could probably get through the classes and major but I didn't know if I was going to be _happy_ with it. Slowly, I started to realize that in every single class I took, I was always comparing myself to others and I always felt like I was behind. I mean, I would overhear people talking about their internships, research, and personal projects. I felt like I was always playing catch-up and if I failed an exam, couldn't solve something on my own, or work on a project, I was going to get left behind. **I truly did not know what I was supposed to be doing**. 
 
 
-## Imposter Syndrome
+## Battling Self-Doubt
 
 Because I was going through all of these thoughts and emotions, I started to handle these thoughts and emotions in very unhealthy ways. I would stay up late, not eat, and not take care of myself physically or mentally. I would constantly push myself to my limits and view every mistake as a failure. I over committed myself to clubs, research, and classes because I thought that if that's not what I was doing, then I was going to be left behind.
 
@@ -40,7 +40,7 @@ Because of that, I was constantly stressed, anxious, and depressed. I was always
 I missed out on a lot of opportunities and experiences because I was so hyperfocused on my future and my career. I missed out on making friends, going to events, and just enjoying my time in college. Sure, I was on the executive board of multiple organizations, I was a part of research labs, and I started making a name for myself in the CS department but I was never truly _happy_. I had friends and I had fun but I was never truly present. I was always thinking about what I had to do next, what I had to do to get ahead, and what I had to do to be successful.
 
 
-## Summer 2023
+## Summer
 
 This past summer, I was working in San Francisco for a big technology company. It was an amazing experience and I got to meet really smart and talented people. Most importantly though, it was the first time in a **very** long time where I was able to take a step back and truly reflect on my life and my career.
 
