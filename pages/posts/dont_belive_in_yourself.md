@@ -22,7 +22,7 @@ For the first time in my life, I truly had no **plan** or real feeling of **cont
 
 ## The Start of It
 
-I decided on a whim that I had just had to pick **something** and see how it goes. So, I decided to take CS 111 in the fall of my freshman year. I struggled, and I wasn't by any means the best student in the class but I wasn't _bad_ at it. 
+I decided on a whim that I just had to pick **something** and see how it goes. So, I decided to take CS 111 in the fall of my freshman year. I struggled, and I wasn't by any means the best student in the class but I wasn't _bad_ at it. 
 
 So, for the sake of feeling like I had some sort of direction, I decided to switch to Computer Science. I knew I liked computers and technology, and I knew that I was alright at math and problem-solving, so I thought I could at least try it. 
 
