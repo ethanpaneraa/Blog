@@ -2,6 +2,7 @@
 
 import { ArrowUpRight } from "lucide-react";
 import { Blur } from "@/components/ui/blur";
+import StyledLinkWithIcon from "@/components/ui/styled-link";
 
 export default function Header() {
   return (
@@ -20,32 +21,59 @@ export default function Header() {
 
       <p className="text-gray-11 text-base">
         Get in touch via{" "}
-        <a
-          href="https://twitter.com"
-          className="inline-flex items-center hover:underline"
+        <StyledLinkWithIcon
+          href="mailto:ethanpineda2025@u.northwestern.edu"
+          className="text-base"
         >
-          Twitter <ArrowUpRight className="ml-0.5 h-3 w-3" />
-        </a>{" "}
-        or{" "}
-        <a
-          href="mailto:example@email.com"
-          className="inline-flex items-center hover:underline"
+          email
+        </StyledLinkWithIcon>
+        ,{" "}
+        <StyledLinkWithIcon
+          href="https://twitter.com/ethanpineda"
+          className="text-base"
         >
-          email <ArrowUpRight className="ml-0.5 h-3 w-3" />
-        </a>
-        , see my code on{" "}
-        <a
-          href="https://github.com"
-          className="inline-flex items-center hover:underline"
+          twitter
+        </StyledLinkWithIcon>
+        , or check out my code on{" "}
+        <StyledLinkWithIcon
+          href="github.com/ethanpaneraa"
+          className="text-base"
         >
-          Github <ArrowUpRight className="ml-0.5 h-3 w-3" />
-        </a>
-        , or find me on{" "}
+          github
+        </StyledLinkWithIcon>{" "}
+        or on{" "}
         <Blur>
-          <a>platforms that i don't like using</a>
+          <a
+            href="https://www.linkedin.com/in/ethanpineda/"
+            target="_blank"
+            className="text-gray-12 underline"
+          >
+            platforms that i don't like
+          </a>{" "}
+          using but necessary for growth
         </Blur>
         .
       </p>
+
+      <div className="space-y-4 text-gray-11 text-base">
+        <p>
+          This blog is a place and medium for me to share my thoughts,
+          experiences, and projects. I hope to use this blog as a way to
+          document my journey as a student, software engineer, and as a person.
+          I hope that this can be a resource for others who are interested in
+          similar topics and experiences or are generally, just curious about
+          how I think and what I do.
+        </p>
+        <br />
+        <br />
+        <Blur>
+          <p className="text-base text-gray-11">
+            What is discussed and mentioned in this blog is not necessarily
+            representative of my employers, or any other organization I am
+            affiliated with.
+          </p>
+        </Blur>
+      </div>
     </header>
   );
 }

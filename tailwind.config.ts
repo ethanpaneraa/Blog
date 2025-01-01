@@ -40,6 +40,7 @@ module.exports = {
         A12: "var(--gray-A12)",
       },
       white: "hsl(0 0% 100%)",
+      accent: "var(--gray-12)",
     },
     extend: {
       fontFamily: {
