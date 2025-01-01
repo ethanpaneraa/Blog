@@ -72,7 +72,7 @@ export default async function Post({ params }: PageProps) {
               url: `https://blog-chi-neon-82.vercel.app/writing/${post.slug}`,
               author: {
                 "@type": "Person",
-                name: "Shoubhit Dash",
+                name: "ethan pineda",
               },
             }),
           }}

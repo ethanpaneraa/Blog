@@ -1,4 +1,10 @@
+import UnstyledLink from "@/components/ui/primitives/unstyled-link";
+import { ArrowTopRightIcon } from "@radix-ui/react-icons";
+import { cva } from "class-variance-authority";
+import { cn } from "@/lib/styling";
+import type { FC, HTMLAttributes, ReactNode } from "react";
 import type { LinkProps } from "next/link";
+
 interface StyledLinkProps extends LinkProps {
   href: string;
   icon?: ReactNode;
@@ -6,15 +12,9 @@ interface StyledLinkProps extends LinkProps {
   bold?: boolean;
 }
 
-const StyledLinkWithIcon: FC<StyledLinkProps & HtmlHTMLAttributes<{}>> = ({
-  className,
-  href,
-  children,
-  icon = null,
-  iconless,
-  bold,
-  ...rest
-}) => {
+const StyledLinkWithIcon: FC<
+  StyledLinkProps & HTMLAttributes<HTMLAnchorElement>
+> = ({ className, href, children, icon = null, iconless, bold, ...rest }) => {
   const ICONS_ENUM = {
     external: <ArrowTopRightIcon />,
   };
@@ -47,7 +47,6 @@ const StyledLinkWithIcon: FC<StyledLinkProps & HtmlHTMLAttributes<{}>> = ({
       {children}
       {!iconless && (
         <span className="whitespace-nowrap [&>svg]:inline">
-          {/* don't allow for line breaks between copy and icon */}
           {"\u00a0"}
           {icon}
         </span>
@@ -57,10 +56,3 @@ const StyledLinkWithIcon: FC<StyledLinkProps & HtmlHTMLAttributes<{}>> = ({
 };
 
 export default StyledLinkWithIcon;
-
-import UnstyledLink from "@/components/ui/primitives/unstyled-link";
-
-import { ArrowTopRightIcon } from "@radix-ui/react-icons";
-import { cva } from "class-variance-authority";
-import { cn } from "@/lib/styling";
-import type { FC, HtmlHTMLAttributes, ReactNode } from "react";

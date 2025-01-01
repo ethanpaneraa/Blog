@@ -1,15 +1,16 @@
 import { MDXRemote } from "next-mdx-remote/rsc";
+import type { MDXRemoteProps } from "next-mdx-remote/rsc";
 import Link from "next/link";
 import { Children, createElement, isValidElement } from "react";
 import { codeToHtml } from "shiki";
 
 function Table({ data }: { data: { headers: string[]; rows: string[][] } }) {
-  let headers = data.headers.map((header, index) => (
+  const headers = data.headers.map((header, index) => (
     <th key={index} className="p-2 text-left">
       {header}
     </th>
   ));
-  let rows = data.rows.map((row, index) => (
+  const rows = data.rows.map((row, index) => (
     <tr key={index}>
       {row.map((cell, cellIndex) => (
         <td key={cellIndex} className="p-2 text-left">
@@ -103,11 +104,11 @@ function slugify(str: string) {
   return str
     .toString()
     .toLowerCase()
-    .trim() // Remove whitespace from both ends of a string
-    .replace(/\s+/g, "-") // Replace spaces with -
-    .replace(/&/g, "-and-") // Replace & with 'and'
-    .replace(/[^\w\-]+/g, "") // Remove all non-word characters except for -
-    .replace(/\-\-+/g, "-"); // Replace multiple - with single -
+    .trim()
+    .replace(/\s+/g, "-")
+    .replace(/&/g, "-and-")
+    .replace(/[^\w\-]+/g, "")
+    .replace(/\-\-+/g, "-");
 }
 
 function createHeading(level: number) {
@@ -141,9 +142,13 @@ const components = {
   h6: createHeading(6),
   pre: Pre,
   Table,
-};
+} as const;
 
-export function MDX(props: any) {
+interface MDXProps extends Omit<MDXRemoteProps, "components"> {
+  components?: Partial<typeof components>;
+}
+
+export function MDX(props: MDXProps) {
   return (
     <MDXRemote
       {...props}

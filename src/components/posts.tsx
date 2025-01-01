@@ -41,8 +41,9 @@ export function Posts({ posts }: PostsProps) {
       } else if (e.key === "Escape" && isSearching) {
         setIsSearching(false);
         setSearchQuery("");
-        document.activeElement instanceof HTMLElement &&
+        if (document.activeElement instanceof HTMLElement) {
           document.activeElement.blur();
+        }
       } else if (
         isSearching &&
         (((e.ctrlKey || e.metaKey) && (e.key === "j" || e.key === "k")) ||
@@ -89,9 +90,9 @@ export function Posts({ posts }: PostsProps) {
               autoFocus
               placeholder="search posts..."
               aria-label="Search posts"
-              role="searchbox"
-              aria-expanded={filteredPosts.length > 0}
+              role="combobox"
               aria-controls="search-results"
+              aria-expanded={filteredPosts.length > 0}
               aria-activedescendant={
                 isSearching && filteredPosts.length > 0
                   ? `post-${filteredPosts[selectedIndex].slug}`
@@ -102,7 +103,7 @@ export function Posts({ posts }: PostsProps) {
         </div>
       )}
 
-      <div className="space-y-8 sm:space-y-4">
+      <div id="search-results" className="space-y-8 sm:space-y-4">
         {filteredPosts.map((item, index) => (
           <div
             key={item.slug}

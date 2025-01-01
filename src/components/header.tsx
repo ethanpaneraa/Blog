@@ -1,6 +1,3 @@
-"use client";
-
-import { ArrowUpRight } from "lucide-react";
 import { Blur } from "@/components/ui/blur";
 import StyledLinkWithIcon from "@/components/ui/styled-link";
 
@@ -50,7 +47,7 @@ export default function Header() {
             target="_blank"
             className="text-gray-12 underline"
           >
-            platforms that i don't like
+            platforms that i don&apos;t like
           </a>{" "}
           using but necessary for growth
         </Blur>

@@ -75,4 +75,3 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowLeftIcon, PinLeftIcon } from "@radix-ui/react-icons";
 import { cva } from "class-variance-authority";
-import { usePathname } from "next/navigation";
