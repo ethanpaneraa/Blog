@@ -66,7 +66,7 @@ export default async function Post({ params }: PageProps) {
               datePublished: post.metadata.date,
               dateModified: post.metadata.date,
               description: post.metadata.description,
-              image: `https://blog-chi-neon-82.vercel.app/og/blog?title=${
+              image: `https://blog-chi-neon-82.vercel.app/og/writing?title=${
                 post.metadata.title
               }&top=${formatDate(post.metadata.date)}`,
               url: `https://blog-chi-neon-82.vercel.app/writing/${post.slug}`,
