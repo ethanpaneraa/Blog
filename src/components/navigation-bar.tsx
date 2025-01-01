@@ -17,21 +17,26 @@ const MainNav: React.FC<MainNavProps> = ({
   backMessage,
   backAnchor,
 }) => {
-  const { breadcrumbs } = useBreadcrumbsStore();
   const [anchor, setAnchor] = useState("/");
+  const [destination, setDestination] = useState<string>(backMessage || "Back");
+
   useEffect(() => {
-    if (!breadcrumbs) return;
-    let found = false;
-    for (let i = breadcrumbs.length - 1; i >= 0 && found == false; i--) {
-      if (breadcrumbs[i] == backAnchor) {
-        setAnchor(breadcrumbs[i]);
-        found = true;
-      }
-      if (breadcrumbs[i] == "/") {
-        found = true;
+    if (backAnchor) {
+      setAnchor(backAnchor);
+      // Only set destination if backMessage isn't provided
+      if (!backMessage) {
+        // Convert path to readable text
+        const readablePath =
+          backAnchor
+            .split("/")
+            .filter(Boolean) // Remove empty strings
+            .pop() // Get last segment
+            ?.replace(/-/g, " ") // Replace hyphens with spaces
+            ?.replace(/^\w/, (c) => c.toUpperCase()) || "Back"; // Capitalize first letter
+        setDestination(readablePath);
       }
     }
-  }, [backAnchor, breadcrumbs]);
+  }, [backAnchor, backMessage]);
 
   return (
     <nav
@@ -57,7 +62,7 @@ const MainNav: React.FC<MainNavProps> = ({
             {anchor === "/" ? <PinLeftIcon /> : <ArrowLeftIcon />}
           </span>
           <span className="ml-1 opacity-[0.01] duration-fast-02 ease-productive-standard group-hover:opacity-100 group-focus:opacity-100 motion-safe:transition-opacity">
-            {backMessage ? backMessage : "Back"}
+            {destination}
           </span>
         </Link>
       )}
@@ -66,10 +71,8 @@ const MainNav: React.FC<MainNavProps> = ({
 };
 
 export default MainNav;
-
-import { useBreadcrumbsStore } from "@/app/providers";
-
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowLeftIcon, PinLeftIcon } from "@radix-ui/react-icons";
 import { cva } from "class-variance-authority";
+import { usePathname } from "next/navigation";

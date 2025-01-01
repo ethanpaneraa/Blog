@@ -18,27 +18,33 @@ import { useEffect } from "react";
 
 type BreadcrumbsState = {
   breadcrumbs: string[];
-  add: (segment: string) => void;
+  add: (path: string) => void;
+  getPreviousPath: (currentPath: string) => string;
 };
-export const useBreadcrumbsStore = create<BreadcrumbsState>((set) => ({
+
+export const useBreadcrumbsStore = create<BreadcrumbsState>((set, get) => ({
   breadcrumbs: [],
-  add: (segment) =>
-    set((state) => ({ breadcrumbs: [...state.breadcrumbs, segment] })),
-  // remove: () => set({ bears: 0 }),
+  add: (path) =>
+    set((state) => ({ breadcrumbs: [...state.breadcrumbs, path] })),
+  getPreviousPath: (currentPath) => {
+    const { breadcrumbs } = get();
+    const currentIndex = breadcrumbs.lastIndexOf(currentPath);
+    // If we can't find the current path or it's the first item, return root
+    if (currentIndex <= 0) return "/";
+    // Otherwise return the previous path
+    return breadcrumbs[currentIndex - 1];
+  },
 }));
+
 const HistoryTracker = () => {
   const pathname = usePathname();
-  const currentSegment = `/${pathname?.split("/").at(-1) || ""}`;
-
-  const { breadcrumbs, add } = useBreadcrumbsStore();
-
-  useEffect(() => {
-    console.log(breadcrumbs);
-  }, [breadcrumbs]);
+  // Instead of just the last segment, let's track the full path
+  const { add } = useBreadcrumbsStore();
 
   useEffect(() => {
-    add(currentSegment);
-  }, [currentSegment, add]);
+    // Add the full path instead of just the segment
+    add(pathname || "/");
+  }, [pathname, add]);
 
   return <></>;
 };

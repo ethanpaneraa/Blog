@@ -3,6 +3,7 @@ import { Geist_Mono } from "next/font/google";
 import { Grain } from "@/components/ui/grain";
 import { Vignette } from "@/components/ui/vignette";
 import { Providers } from "@/app/providers";
+import Footer from "@/components/footer";
 import "./globals.css";
 
 const geistMono = Geist_Mono({
@@ -29,6 +30,7 @@ export default function RootLayout({
         <Grain />
         <Vignette />
         <Providers>{children}</Providers>
+        <Footer />
       </body>
     </html>
   );

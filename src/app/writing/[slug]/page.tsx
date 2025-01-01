@@ -47,16 +47,13 @@ export default async function Post({ params }: PageProps) {
   const slug = (await params).slug;
   const post = getPostBySlug(slug);
 
-  console.log("this is the slug", slug);
-  console.log("this is the post", post);
-
   if (!post) {
     notFound();
   }
 
   return (
     <>
-      <MainNav backable={true} backMessage="Writing" backAnchor="/writing" />
+      <MainNav backable={true} backMessage="writing" backAnchor="/writing" />
       <section className="animate-fade-in-up max-w-4xl mx-auto p-8 md:p-16 lg:p-24">
         <script
           type="application/ld+json"
