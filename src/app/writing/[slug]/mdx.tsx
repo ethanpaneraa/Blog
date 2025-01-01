@@ -65,6 +65,13 @@ async function Pre({
   const isCodeBlock =
     typeof className === "string" && className.startsWith("language-");
 
+  // Handle inline code
+  if (!isCodeBlock && codeElement) {
+    const content = String(codeElement.props.children).replace(/`/g, "");
+    return <code {...props}>{content}</code>;
+  }
+
+  // Handle code blocks
   if (isCodeBlock) {
     const lang = className.split(" ")[0]?.split("-")[1] ?? "";
 
@@ -72,15 +79,20 @@ async function Pre({
       return <code {...props}>{children}</code>;
     }
 
-    const html = await codeToHtml(String(codeElement?.props.children), {
-      lang,
-      themes: {
-        dark: "vesper",
-        light: "vitesse-light",
-      },
-    });
+    const html = await codeToHtml(
+      String(codeElement?.props.children).replace(/^`{3}[\w]*\n|`{3}$/g, ""),
+      {
+        lang,
+        themes: {
+          dark: "vesper",
+          light: "vitesse-light",
+        },
+      }
+    );
 
-    return <div dangerouslySetInnerHTML={{ __html: html }} />;
+    return (
+      <div dangerouslySetInnerHTML={{ __html: html }} className="not-prose" />
+    );
   }
 
   // If not, return the component as is

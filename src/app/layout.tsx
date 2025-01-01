@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Geist_Mono } from "next/font/google";
 import { Grain } from "@/components/ui/grain";
 import { Vignette } from "@/components/ui/vignette";
-import MainNav from "@/components/navigation-bar";
 import { Providers } from "@/app/providers";
 import "./globals.css";
 
@@ -29,10 +28,7 @@ export default function RootLayout({
       >
         <Grain />
         <Vignette />
-        <Providers>
-          <MainNav />
-          {children}
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );

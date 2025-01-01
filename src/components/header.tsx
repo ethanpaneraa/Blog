@@ -11,8 +11,10 @@ export default function Header() {
         <h1 className="text-2xl font-normal text-gray-11">
           <span className="text-base text-gray-11">ethan pineda</span>
         </h1>
-        <div className="space-y-1">
-          <p className="text-lg ">making things on the web.</p>
+        <div className="space-y-2 font-semibold">
+          <p className="text-lg ">
+            making and writing things things on the web.
+          </p>
           <p className="text-lg ">
             exploring low-level systems, life, and career growth.
           </p>

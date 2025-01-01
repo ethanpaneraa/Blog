@@ -21,11 +21,7 @@ export function getPosts(): MDXFileData[] {
 }
 
 export function getPostBySlug(slug: string): MDXFileData | null {
-  const res = getPosts().find((post) => post.slug === slug) ?? null;
-  console.log("this is the res", res);
-  console.log("this is the slug", slug);
-  console.log("this is the posts", getPosts()[0].slug);
-  return res;
+  return getPosts().find((post) => post.slug === slug) ?? null;
 }
 
 function parseFrontmatter(fileContent: string): FrontmatterParseResult {

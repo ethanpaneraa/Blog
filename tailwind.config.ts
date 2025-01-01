@@ -203,6 +203,7 @@ module.exports = {
   ],
   plugins: [
     require("tailwindcss-radix")(),
+    require("@tailwindcss/typography"),
     require("tailwindcss-animate"),
     // @ts-ignore-next-line - This is a custom plugin
     function ({ addBase, theme }) {
