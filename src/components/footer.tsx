@@ -3,11 +3,14 @@ import { Github, Twitter, Linkedin } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="max-w-4xl mx-auto border-t border-gray-05 px-4 py-6 mb-6">
+    <footer
+      className="max-w-4xl mx-auto border-t border-gray-05 px-4 py-6 mb-6 font-mono
+    "
+    >
       <div className="container flex items-center justify-between">
         <Link
           href="/"
-          className="text-lg text-muted-foreground hover:text-foreground transition-colors"
+          className="text-md text-muted-foreground hover:text-foreground transition-colors"
         >
           ethan pineda
         </Link>
