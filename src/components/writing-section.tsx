@@ -13,7 +13,7 @@ export function WritingSection() {
   return (
     <section className="mb-12 w-full animate-fade-in-up">
       <h2 className="mb-4 flex items-center font-semibold text-gray-12 text-lg">
-        writing
+        pieces
       </h2>
       <div className="space-y-3">
         {posts.map((post, index) => (

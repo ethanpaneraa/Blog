@@ -46,12 +46,13 @@ export default async function WritingPage() {
 }
 
 export const metadata: Metadata = {
-  title: "Blog",
-  description: "Writings on programming, computer science, and more.",
+  title: "writing",
+  description:
+    "writing pieces on software engineering, life, career development, and my personal interest and goals.",
   openGraph: {
     images: [
       {
-        url: "https://www.nexxel.dev/og/home?title=blog",
+        url: "https://blog-chi-neon-82.vercel.app/og/home?title=writing",
       },
     ],
   },

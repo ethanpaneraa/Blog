@@ -24,10 +24,10 @@ export async function generateMetadata({ params }: PageProps) {
       description: post.metadata.description,
       publishedTime,
       type: "article",
-      url: `https://www.nexxel.dev/writing/${post.slug}`,
+      url: `https://blog-chi-neon-82.vercel.app/writing/${post.slug}`,
       images: [
         {
-          url: `https://www.nexxel.dev/og/blog?title=${post.metadata.title}`,
+          url: `https://blog-chi-neon-82.vercel.app/og/writing?title=${post.metadata.title}`,
         },
       ],
     },
@@ -35,9 +35,9 @@ export async function generateMetadata({ params }: PageProps) {
       title: post.metadata.title,
       description: post.metadata.description,
       card: "summary_large_image",
-      creator: "@nexxeln",
+      creator: "@ethanpaneraa",
       images: [
-        `https://www.nexxel.dev/og/blog?title=${post.metadata.title}&top=${publishedTime}`,
+        `https://blog-chi-neon-82.vercel.app/og/writing?title=${post.metadata.title}&top=${publishedTime}`,
       ],
     },
   };
@@ -66,10 +66,10 @@ export default async function Post({ params }: PageProps) {
               datePublished: post.metadata.date,
               dateModified: post.metadata.date,
               description: post.metadata.description,
-              image: `https://nexxel.dev/og/blog?title=${
+              image: `https://blog-chi-neon-82.vercel.app/og/blog?title=${
                 post.metadata.title
               }&top=${formatDate(post.metadata.date)}`,
-              url: `https://nexxel.dev/blog/${post.slug}`,
+              url: `https://blog-chi-neon-82.vercel.app/writing/${post.slug}`,
               author: {
                 "@type": "Person",
                 name: "Shoubhit Dash",
