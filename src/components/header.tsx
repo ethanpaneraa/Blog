@@ -66,7 +66,7 @@ export default function Header() {
         <br />
         <br />
         <Blur>
-          <p className="text-base text-gray-11">
+          <p className="text-gray-11 text-sm">
             What is discussed and mentioned in this blog is not necessarily
             representative of my employers, or any other organization I am
             affiliated with.

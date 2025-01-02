@@ -2,6 +2,7 @@ const vignetteZIndex = 10;
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: ["class"],
   content: [
     "./src/**/*.{js,ts,jsx,tsx,mdx}",
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
@@ -11,8 +12,10 @@ module.exports = {
     colors: {
       transparent: "transparent",
       current: "currentColor",
-      // Stolen from rauno for now
       gray: {
+        "10": "var(--gray-10)",
+        "11": "var(--gray-11)",
+        "12": "var(--gray-12)",
         "00": "var(--gray-00)",
         "01": "var(--gray-01)",
         "02": "var(--gray-02)",
@@ -23,9 +26,6 @@ module.exports = {
         "07": "var(--gray-07)",
         "08": "var(--gray-08)",
         "09": "var(--gray-09)",
-        10: "var(--gray-10)",
-        11: "var(--gray-11)",
-        12: "var(--gray-12)",
         A01: "var(--gray-A01)",
         A02: "var(--gray-A02)",
         A03: "var(--gray-A03)",
@@ -49,10 +49,10 @@ module.exports = {
         mono: ["var(--font-geist-mono)"],
       },
       gridTemplateColumns: {
-        13: "repeat(13, minmax(0, 1fr))",
-        14: "repeat(14, minmax(0, 1fr))",
-        15: "repeat(15, minmax(0, 1fr))",
-        16: "repeat(16, minmax(0, 1fr))",
+        "13": "repeat(13, minmax(0, 1fr))",
+        "14": "repeat(14, minmax(0, 1fr))",
+        "15": "repeat(15, minmax(0, 1fr))",
+        "16": "repeat(16, minmax(0, 1fr))",
       },
       gridColumn: {
         "span-13": "span 13 / span 13",
@@ -61,68 +61,97 @@ module.exports = {
         "span-16": "span 16 / span 16",
       },
       gridColumnStart: {
-        13: "13",
-        14: "14",
-        15: "15",
-        16: "16",
-        17: "17",
+        "13": "13",
+        "14": "14",
+        "15": "15",
+        "16": "16",
+        "17": "17",
       },
       gridColumnEnd: {
-        13: "13",
-        14: "14",
-        15: "15",
-        16: "16",
-        17: "17",
+        "13": "13",
+        "14": "14",
+        "15": "15",
+        "16": "16",
+        "17": "17",
       },
       keyframes: {
         fadeBlueOut: {
-          "0%": { backgroundColor: "#0E61FE", transform: "scale(1)" },
+          "0%": {
+            backgroundColor: "#0E61FE",
+            transform: "scale(1)",
+          },
           "100%": {
             backgroundColor: "var(--gray-04)",
             transform: "scale(0.4)",
           },
         },
         fade: {
-          "0%": { opacity: "0" },
-          "100%": { opacity: "1" },
+          "0%": {
+            opacity: "0",
+          },
+          "100%": {
+            opacity: "1",
+          },
         },
         fadeOut: {
-          "0%": { opacity: "1" },
-          "100%": { opacity: "0" },
+          "0%": {
+            opacity: "1",
+          },
+          "100%": {
+            opacity: "0",
+          },
         },
-
         scaleInSlideDown: {
-          "0%": { opacity: "0", transform: "translateY(-5px) scale(0)" },
-          "100%": { opacity: "1", transform: "translateY(0) scale(1)" },
+          "0%": {
+            opacity: "0",
+            transform: "translateY(-5px) scale(0)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateY(0) scale(1)",
+          },
         },
         scaleInSlideUp: {
-          "0%": { opacity: "0", transform: "translateY(5px) scale(0)" },
-          "100%": { opacity: "1", transform: "translateY(0) scale(1)" },
+          "0%": {
+            opacity: "0",
+            transform: "translateY(5px) scale(0)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateY(0) scale(1)",
+          },
         },
         scaleOutSlideDown: {
-          "0%": { opacity: "1", transform: "translateY(0) scale(1)" },
-          "100%": { opacity: "0", transform: "translateY(-5px) scale(0)" },
+          "0%": {
+            opacity: "1",
+            transform: "translateY(0) scale(1)",
+          },
+          "100%": {
+            opacity: "0",
+            transform: "translateY(-5px) scale(0)",
+          },
         },
         scaleOutSlideUp: {
-          "0%": { opacity: "1", transform: "translateY(0) scale(1)" },
-          "100%": { opacity: "0", transform: "translateY(5px) scale(0)" },
+          "0%": {
+            opacity: "1",
+            transform: "translateY(0) scale(1)",
+          },
+          "100%": {
+            opacity: "0",
+            transform: "translateY(5px) scale(0)",
+          },
         },
       },
       animation: {
         fadeBlueOut: "fadeBlueOut 1500ms cubic-bezier(0.2, 0, 0.38, 0.9)",
         fade: "fade 550ms cubic-bezier(0, 0, 0.3, 1)",
         fadeOut: "fadeOut 550ms cubic-bezier(0, 0, 0.3, 1)",
-
         scaleInSlideDown: "scaleInSlideDown 110ms ease-out",
         scaleInSlideUp: "scaleInSlideUp 110ms cubic-bezier(0, 0, 0.38, 0.9)",
-
         scaleOutSlideDown: "scaleOutSlideDown 110ms linear",
         scaleOutSlideUp: "scaleOutSlideUp 110ms cubic-bezier(0.2, 0, 1, 0.9)",
       },
       transitionTimingFunction: {
-        /**
-         * See: https://carbondesignsystem.com/guidelines/motion/overview/
-         */
         "productive-standard": "cubic-bezier(0.2, 0, 0.38, 0.9)",
         "productive-entrance": "cubic-bezier(0, 0, 0.38, 0.9)",
         "productive-exit": "cubic-bezier(0.2, 0, 1, 0.9)",
@@ -130,23 +159,7 @@ module.exports = {
         "expressive-entrance": "cubic-bezier(0, 0, 0.3, 1)",
         "expressive-exit": "cubic-bezier(0.4, 0.14, 1, 1)",
       },
-
       transitionDuration: {
-        /**
-         * fast-01 - 70ms - Micro-interactions such as button and toggle
-         *
-         * fast-02 - 110ms - Micro-interactions such as fade
-         *
-         * moderate-01 - 150ms - Micro-interactions, small expansion, short distance movements
-         *
-         * moderate-02 - 240ms - Expansion, system communication, toast
-         *
-         * slow-01 - 400ms - Large expansion, important system notifications
-         *
-         * slow-02 - 700ms - Background dimming
-         *
-         * See: https://carbondesignsystem.com/guidelines/motion/overview/
-         */
         "fast-01": "70ms",
         "fast-02": "110ms",
         "moderate-01": "150ms",
@@ -156,42 +169,71 @@ module.exports = {
       },
       borderRadius: {
         inherit: "inherit",
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
       },
       dropShadow: {
-        input: `
-        0px 1px 0px -1px var(--tw-shadow-color),
-        0px 1px 1px -1px var(--tw-shadow-color),
-        0px 1px 2px -1px var(--tw-shadow-color),
-        0px 2px 4px -2px var(--tw-shadow-color),
-        0px 3px 6px -3px var(--tw-shadow-color)
-      `,
-        highlight: `
-        inset 0px 0px 0px 1px var(--tw-shadow-color),
-        inset 0px 1px 0px var(--tw-shadow-color)
-      `,
-        "faux-border": `
-            inset 0px 0px 0px 1px var(--tw-shadow-color),
-        `,
+        input:
+          "`\n        0px 1px 0px -1px var(--tw-shadow-color),\n        0px 1px 1px -1px var(--tw-shadow-color),\n        0px 1px 2px -1px var(--tw-shadow-color),\n        0px 2px 4px -2px var(--tw-shadow-color),\n        0px 3px 6px -3px var(--tw-shadow-color)\n      `",
+        highlight:
+          "`\n        inset 0px 0px 0px 1px var(--tw-shadow-color),\n        inset 0px 1px 0px var(--tw-shadow-color)\n      `",
+        "faux-border":
+          "`\n            inset 0px 0px 0px 1px var(--tw-shadow-color),\n        `",
       },
       boxShadow: {
-        input: `
-            0px 1px 0px -1px var(--tw-shadow-color),
-            0px 1px 1px -1px var(--tw-shadow-color),
-            0px 1px 2px -1px var(--tw-shadow-color),
-            0px 2px 4px -2px var(--tw-shadow-color),
-            0px 3px 6px -3px var(--tw-shadow-color)
-          `,
-        highlight: `
-            inset 0px 0px 0px 1px var(--tw-shadow-color),
-            inset 0px 1px 0px var(--tw-shadow-color)
-          `,
-        "faux-border": `
-            inset 0px 0px 0px 1px var(--tw-shadow-color),
-        `,
+        input:
+          "`\n            0px 1px 0px -1px var(--tw-shadow-color),\n            0px 1px 1px -1px var(--tw-shadow-color),\n            0px 1px 2px -1px var(--tw-shadow-color),\n            0px 2px 4px -2px var(--tw-shadow-color),\n            0px 3px 6px -3px var(--tw-shadow-color)\n          `",
+        highlight:
+          "`\n            inset 0px 0px 0px 1px var(--tw-shadow-color),\n            inset 0px 1px 0px var(--tw-shadow-color)\n          `",
+        "faux-border":
+          "`\n            inset 0px 0px 0px 1px var(--tw-shadow-color),\n        `",
       },
       zIndex: {
-        vignette: `${vignetteZIndex}`,
-        aboveVignette: `${vignetteZIndex + 1}`,
+        vignette: vignetteZIndex,
+        aboveVignette: vignetteZIndex + 1,
+      },
+      colors: {
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        chart: {
+          "1": "hsl(var(--chart-1))",
+          "2": "hsl(var(--chart-2))",
+          "3": "hsl(var(--chart-3))",
+          "4": "hsl(var(--chart-4))",
+          "5": "hsl(var(--chart-5))",
+        },
       },
     },
   },
