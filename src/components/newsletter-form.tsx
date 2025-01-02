@@ -48,7 +48,7 @@ export function NewsletterForm() {
       <Blur>
         <p className="text-gray-11 text-sm">
           if you want to stay up to date with my writing (yapping), subscribe to
-          my newsletter! i promise that i'll have good and hot takes
+          my newsletter! i promise that i&apos;ll have good and hot takes
         </p>
       </Blur>
       <form onSubmit={subscribe} className="space-y-4 max-w-md py-12">
