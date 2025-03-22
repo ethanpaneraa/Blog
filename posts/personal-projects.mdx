@@ -1,0 +1,112 @@
+---
+title: "a guide for making personal projects"
+description: "transcript and small modifications from my talk on building personal projects at northwestern university for develop and innovate for social change."
+date: "March 20, 2025"
+---
+
+## context
+
+I started coding on my first day of college. Before then, I had zero clue what programming even was and how deep it can go. So you could probably guess how cool I thought it was when I wrote my first "hello world" program in COMP_SCI 111 at Northwestern.
+
+Since then, I've gone on to write many more different programs and eventually, even make some projects with my skills.
+
+Some of the things that I've built (and currently building!)
+
+- Alternative to Firecrawl.dev, which is a basically an online web crawler to extract content for LLMs
+- I've read two textbooks that talked about implementing both interpreters and compliers, and I implemented those for the Monke programming language
+- Many different websites and web/mobile applications! You can see all of those in my [perosonal website](https://ethanpinedaa.dev/)
+
+## why you should do personal projects
+
+Assuming your in college or some higher education program, there are two kind of main things that you need to do during your time there.
+
+- **School**: you to go school/university to learn all about all of the theoretic and intricate details about computer science. This is what separates you and gives you the advantage over self-taught programmer / boot camp graduates because you in theory, have learned a lot of the things are often skipped over
+- **Leetcode**: wether you like it or not, this is a necessary evil that everyone more or less has to suffer through
+
+Now heres the problem that I see with many of my fellow Computer Science peers: when do you have time to actually practice your engineering skills? when do you actually have a chance to apply your skills towards something?
+
+I guess there are clubs, organizations, and we even have our own hackathon to try to help with this but there are or more or less limited, not everyone can do them or not everyone takes it seriously.
+
+So from what I've observed and seen, many people can just do Leetcode and pass their classes, and I have faith that this will enable them to become a software engineer. But, I don't think many will know how to actually building something for zero.
+
+And this is the part where I still you a short story that maybe will impact you. In my two years interning in the bay area, I found a common pattern that those who had good project building experience coming into the internship, or open source contributions, or start up work, these were the interns who I think had the "easiest" and most successful transition and process during their internship.
+
+Why is this the case? Because Data Structures and Algorithms is probably a very small part of your day-to-day job during your internship at all. You can be the best competitive programmer in the world, but the reality is that knowing how to work within existing code bases, know the types of questions and decisions you need to make when building our a feature, project, or product from scratch. Likewise, I think it's important to understand and learn about how computers works, how larger systems can come together to perform a single or multiple tasks, and know all about how a compiler works under the hood but you need to actually _work_ on something that tests your knowledge and actually calls for your knowledge. It's very likely that in your job, you will end up using something that some other person in the world made already, and you have to learn and know how connect the wires. It's a lot harder than you think!
+
+So, hopefully I made a case for why you should even care about building personal projects.
+
+This is why you should find time and dedicate resources to learning and working on personal projects. Of course, we all know that personal projects also help you t beef up your resume but I think personal projects are also a good way of "skill testing" yourself. I challenge you, the reader, to try to build something that will automate your life. For example, I have a habit of copy and pasting multiple files of code into Claude to help me with debugging, but copy and pasting probably takes me 30 seconds to do, and this was the inspiration for my first CLI tool, [context](https://github.com/ethanpaneraa/context).
+
+So, hopefully I’ve given you a foundation and sold you on why I think you should be focusing and building personal projects.
+
+## how to come up with ideas
+
+So now I want to talk a little bit about the sort of ideation process of personal projects.
+
+I like to emphasize having a system for building personal projects. For me, I try to work on maybe max 3 projects at a time. This is because for me, if I’m stuck on a bug or I simply get bored of looking at the same UI/project for a while I start to hate it because I notice and understand all of the imperfections. So moving onto a different project helps me “forget” all of the bad things about the code that I’m writing. Maybe because I am brain-rotted from TikTok and Instagram reels but this works really well for me.
+
+And the key here is that personal projects kind of fall different buckets. You either building something to solve or automate some problem you’re having (like I mentioned in the previous section). Or you’re doing something to learn
+
+So, There’s kind of different paths that you can take, some of the ones that I prepared are the following:
+
+- You have a problem, so you build a solution for it
+- You see others have a problem, so you build a solution for it
+- You want to learn something new, so you build something to learn it
+
+Whatever bucket your project falls under I would say changes how you should think about implementing / build the thing you want too. I’ll elaborate on that later.
+
+I want to emphasize that it’s easy to get stuck on the ideation phase. I know that almost every week I have 2-3 ideas for some new startup that I could start, but I have so many ideas that I can’t really commit, and I do is think but I'm not actually building .
+
+I recommend having some sort of quick way of keeping track of your ideas / curiosities
+
+For me, I have a journal that I carry with me everywhere, I write down whatever ideas I have because I love just writing things sometimes. I look back at it here and there and if there’s an idea where I’m like damn lowkey I cooked here then I’ll probably build or it’s something that I keep wondering about.
+
+So surely I’ve thought of the next hottest thing right?
+
+And so I'm going to kind of deviate here because I think what I want to mention is also important it’s important to focus on.
+
+So I’m not like, actually that smart and sometimes things take me a while to learn / wrap my head around. My friends and I have a inside joke where I’ve literally taken CS 321 three times and can’t get through it, it’s been a class that historically, I’ve struggled with. But one thing that you should know about me is that **I just don't give up**
+
+So I used two textbooks:
+
+- “Writing an interpreter in go"
+- "Writing in compiler in go”
+
+I went through the two books over a break during school because I had nothing else better to do and instead of using Golang I used Rust. I of course, didn't make anything that was ready for production but I think with textbooks, they are a great resource for learning about something from both a theoretical sense **and** while getting to actually build it versus those textbooks that are super theory focused. This works best for me personally.
+
+If you’re still struggling to come up with ideas, don’t be afraid to reinvent the wheel. Try to make your version of leetcode for example, try to implement an algorithm or research paper. **Just write some code and see where it takes you**!
+
+## the tech stack
+
+Okay so going back to building something, s depending on what you end up building, it kind of changes how you should approach actually building it in terms of whatever programming language, libraries, and or framework you'll end up using.
+
+I, just like many other programmers in the world, have my own opinions and thoughts and what technology stack is "best" for x,y, and z project. I tend to float around many different things myself but here's a general framework and outline for choosing technologies:
+
+For example, when I wrote my interpter and compiler, it was because 1) I wanted to learn those topics and 2) I wanted to learn rust.
+
+In these cases, it wasn’t about velocity for me, it was about learning. So the biggest bottleneck in development time was just learning the programming language.
+
+And not to say that you can’t have velocity with learning but it’s kind of hard to kind of have both of these concurrently, at least for me.
+
+For other projects, when I want to build something fast while having a set of technologies that I think are "good enough" and will generally, be able to scale with me, here's a list of what I use:
+
+- Next.js - This is a framework that is built on top of React. It's main focus is on a specific architecture and way of thinking when it comes to building full stack applications. If you just want to use something to get something up fast like me and are okay with buying into the Vercel ecosystem, use this, otherwise use Vite.
+- TypeScript: type safety is something you don’t appreciate until you have to work on super large monolithic codebases. I don’t think that having type safety slows down velocity but there’s a learning curve to TS and I can go on about TS but that’s not the focus here
+- TailwindCSS - being able to just write tailwind probably 10xs my developer flow, at this point I have most of the basic components memorized, and this is good for me just getting out. My designs aren’t the most creative, but they at least look nice
+- Shadcn/ui - this is a game changer, its a component library built onto of tailwind, it’s been the GitHub project of the year for the past two years now, shadcn fundamentally changed how component libraries work, and I’m here for it
+- Drizzle
+- PostgresSQL
+- tRPC
+- Vercel
+
+For basically any other project, I would use Golang than is not web development focused. Maybe I will switch to something like Zig especially for embedded projects that I am interested in.
+
+What I want you to get from this section though is that many people will tell what’s the right way to build something and sure, there’s probably more appropriate languages / framekworks for specific problems but you’re building your project. So don’t blindly copy other peoples tech stack, make an effort to understand why that stack works for that person and the types of problems they generally try to solve.
+
+## sticking through it
+
+I want to emphasize and take a pause and really emphasize that when building projects start small. Don’t get caught up in trying to implement some many big features at once. Focus on what’s the core of your project. If you need help deciding that, I think LLMs are a great way of writing personal spec sheets on what you need to build first. You can rescope the project as you go along but having that core is super important so you know which direction you need to go.
+
+I also want to take a note here and talk about not being perfect the first time. It’s okay if you write some sloppy code to get something working, it’s okay if the performance is garbage, just get something done. If you try optimizing early before you have anything done, you’re taking away time and energy at building and you might burn yourself out before you were able to finish the actual thing you wanted to make.
+
+So it’s okay if you’re not like, happy with the first version, but that’s a time for you iterate and improve upon it later. That's the point! Just keep on trying with stuff and see where it takes you.
