@@ -32,7 +32,7 @@ export async function POST(request: Request) {
         const verificationUrl = `${process.env.NEXT_PUBLIC_APP_URL}/api/verify?token=${verificationToken}`;
 
         await resend.emails.send({
-          from: "Ethan Pineda <newsletter@ethanpinedaa.blog>",
+          from: process.env.EMAIL_FROM!,
           to: email,
           subject: "Confirm your subscription",
           react: ConfirmationEmail({ verificationUrl }) as React.ReactElement,
@@ -60,7 +60,7 @@ export async function POST(request: Request) {
 
     const verificationUrl = `${process.env.NEXT_PUBLIC_APP_URL}/api/verify?token=${verificationToken}`;
     await resend.emails.send({
-      from: "Ethan Pineda <newsletter@ethanpinedaa.blog>",
+      from: process.env.EMAIL_FROM!,
       to: email,
       subject: "Confirm your subscription",
       react: ConfirmationEmail({ verificationUrl }) as React.ReactElement,
