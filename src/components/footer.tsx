@@ -10,14 +10,14 @@ export default function Footer() {
       <div className="container flex items-center justify-between">
         <Link
           href="/"
-          className="text-md text-muted-foreground hover:text-foreground transition-colors"
+          className="text-md text-muted-foreground hover:text-accent transition-colors"
         >
           ethan pineda
         </Link>
         <div className="flex items-center space-x-4">
           <Link
             href="https://github.com"
-            className="text-muted-foreground hover:text-foreground transition-colors"
+            className="text-muted-foreground hover:text-accent transition-colors"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -26,7 +26,7 @@ export default function Footer() {
           </Link>
           <Link
             href="https://twitter.com"
-            className="text-muted-foreground hover:text-foreground transition-colors"
+            className="text-muted-foreground hover:text-accent transition-colors"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -35,7 +35,7 @@ export default function Footer() {
           </Link>
           <Link
             href="https://linkedin.com"
-            className="text-muted-foreground hover:text-foreground transition-colors"
+            className="text-muted-foreground hover:text-accent transition-colors"
             target="_blank"
             rel="noopener noreferrer"
           >
