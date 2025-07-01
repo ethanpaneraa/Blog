@@ -45,12 +45,10 @@ export function NewsletterForm() {
       <h2 className="mb-4 flex items-center font-semibold text-gray-12 text-lg">
         newsletter
       </h2>
-      <Blur>
-        <p className="text-gray-11 text-sm">
-          if you want to stay up to date with my writing (yapping), subscribe to
-          my newsletter! i promise that i&apos;ll have good and hot takes
-        </p>
-      </Blur>
+      <p className="text-gray-11 text-sm">
+        if you want to stay up to date with my writing (yapping), subscribe to
+        my newsletter! i promise that i&apos;ll have good and hot takes
+      </p>
       <form onSubmit={subscribe} className="space-y-4 max-w-md py-12">
         <div className="flex flex-col space-y-2">
           <Input

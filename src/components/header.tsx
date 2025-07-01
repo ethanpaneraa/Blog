@@ -49,7 +49,7 @@ export default function Header() {
           >
             platforms that i don&apos;t like
           </a>{" "}
-          using but necessary for growth
+          using
         </Blur>
         .
       </p>
@@ -64,14 +64,11 @@ export default function Header() {
           how I think and what I do.
         </p>
         <br />
-        <br />
-        <Blur>
-          <p className="text-gray-11 text-sm">
-            What is discussed and mentioned in this blog is not necessarily
-            representative of my employers, or any other organization I am
-            affiliated with.
-          </p>
-        </Blur>
+        <p className="text-gray-11 text-base italic">
+          What is discussed and mentioned in this blog is not necessarily
+          representative of my employers, or any other organization I am
+          affiliated with or worked with.
+        </p>
       </div>
     </header>
   );
