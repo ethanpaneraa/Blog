@@ -1,11 +1,18 @@
 import { notFound } from "next/navigation";
 import { MDX } from "./mdx";
-import { getPostBySlug } from "@/lib/blog";
+import { getPostBySlug, getPosts } from "@/lib/blog";
 import MainNav from "@/components/navigation-bar";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
 };
+
+export async function generateStaticParams() {
+  const posts = getPosts();
+  return posts.map((post) => ({
+    slug: post.slug,
+  }));
+}
 
 export async function generateMetadata({ params }: PageProps) {
   const slug = (await params).slug;
