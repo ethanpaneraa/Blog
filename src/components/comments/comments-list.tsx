@@ -13,7 +13,6 @@ interface CommentItemProps {
   slug: string;
   onReplyAdded: () => void;
   depth?: number;
-  replyingTo?: Comment;
 }
 
 function CommentItem({
@@ -21,11 +20,9 @@ function CommentItem({
   slug,
   onReplyAdded,
   depth = 0,
-  replyingTo,
 }: CommentItemProps) {
   const [showReplyForm, setShowReplyForm] = useState(false);
-  const maxVisualDepth = 4; // Max visual nesting
-  const actualDepth = Math.min(depth, maxVisualDepth);
+  const maxDepth = 3;
 
   const handleReplyAdded = () => {
     setShowReplyForm(false);
@@ -34,26 +31,9 @@ function CommentItem({
 
   return (
     <div
-      className={`${actualDepth > 0 ? "ml-6 border-l-2 border-gray-06 pl-4" : ""}`}
+      className={`${depth > 0 ? "ml-6 border-l-2 border-gray-06 pl-4" : ""}`}
     >
       <div className="py-2">
-        {depth > maxVisualDepth && replyingTo && (
-          <div className="mb-3 p-2 bg-gray-02 border border-gray-04 rounded text-sm">
-            <div className="flex items-center gap-2 mb-1">
-              <span className="text-gray-09">↳ Replying to</span>
-              <span className="font-medium text-gray-11">
-                {replyingTo.author_name}:
-              </span>
-            </div>
-            <p className="text-gray-10 italic line-clamp-2">
-              "
-              {replyingTo.content.length > 100
-                ? replyingTo.content.substring(0, 100) + "..."
-                : replyingTo.content}
-              "
-            </p>
-          </div>
-        )}
         <div className="flex items-center gap-2 mb-2">
           <span className="font-medium text-gray-12">
             {comment.author_name}
@@ -67,14 +47,15 @@ function CommentItem({
               minute: "2-digit",
             })}
           </span>
-          <button
-            onClick={() => setShowReplyForm(!showReplyForm)}
-            className="text-gray-09 text-sm hover:text-gray-11 transition-colors underline"
-          >
-            {showReplyForm ? "cancel" : "reply"}
-          </button>
+          {depth < maxDepth && (
+            <button
+              onClick={() => setShowReplyForm(!showReplyForm)}
+              className="text-gray-09 text-sm hover:text-gray-11 transition-colors underline"
+            >
+              {showReplyForm ? "cancel" : "reply"}
+            </button>
+          )}
         </div>
-
         <p className="text-gray-11 whitespace-pre-wrap mb-4">
           {comment.content}
         </p>
@@ -86,11 +67,12 @@ function CommentItem({
               parentId={comment.id}
               onCommentAdded={handleReplyAdded}
               isReply={true}
-              replyingTo={comment}
             />
           </div>
         )}
       </div>
+
+      {/* Render replies */}
       {comment.replies && comment.replies.length > 0 && (
         <div className="space-y-4">
           {comment.replies.map((reply) => (
@@ -100,7 +82,6 @@ function CommentItem({
               slug={slug}
               onReplyAdded={onReplyAdded}
               depth={depth + 1}
-              replyingTo={depth >= maxVisualDepth ? comment : undefined}
             />
           ))}
         </div>
