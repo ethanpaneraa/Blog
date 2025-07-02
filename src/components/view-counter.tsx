@@ -13,7 +13,7 @@ export function ViewCounter({ slug, initialCount = 0 }: ViewCounterProps) {
 
   return (
     <span className="text-sm text-gray-400">
-      • {displayCount} {displayCount === 1 ? "view" : "views"}
+      | {displayCount} {displayCount === 1 ? "view" : "views"}
     </span>
   );
 }

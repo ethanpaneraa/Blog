@@ -13,7 +13,7 @@ export default function Page() {
           backAnchor="https://ethanpinedaa.dev/"
         />
         <div className="relative z-aboveVignette min-h-screen p-8 md:p-16 lg:p-24 motion-safe:animate-fade ">
-          <div className="mx-auto max-w-2xl flex gap-16 flex-col">
+          <div className="mx-auto max-w-xl flex gap-16 flex-col">
             <Header />
             <WritingSection />
             <NewsletterForm />
