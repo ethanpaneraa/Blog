@@ -38,6 +38,7 @@ export function CommentForm({
     "idle" | "loading" | "success" | "error"
   >("idle");
   const [message, setMessage] = useState("");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [showClearOption, setShowClearOption] = useState(false);
   const [hasSavedInfo, setHasSavedInfo] = useState(false);
 
@@ -82,22 +83,6 @@ export function CommentForm({
     }
   };
 
-  const clearSavedInfo = () => {
-    try {
-      localStorage.removeItem(STORAGE_KEY);
-      setFormData((prev) => ({
-        ...prev,
-        author_name: "",
-        author_email: "",
-      }));
-      setShowClearOption(false);
-      setHasSavedInfo(false);
-    } catch (error) {
-      console.warn("Failed to clear saved info:", error);
-    }
-  };
-
-  // Show the banner when user focuses on the name field (if they have saved info)
   const handleNameFieldFocus = () => {
     if (hasSavedInfo && formData.author_name) {
       setShowClearOption(true);
@@ -175,11 +160,11 @@ export function CommentForm({
             </span>
           </div>
           <p className="text-gray-10 text-sm italic">
-            "
+            &ldquo;
             {replyingTo.content.length > 150
               ? replyingTo.content.substring(0, 150) + "..."
               : replyingTo.content}
-            "
+            &rdquo;
           </p>
         </div>
       )}
@@ -237,7 +222,7 @@ export function CommentForm({
             isReply && replyingTo
               ? `Reply to ${replyingTo.author_name}...`
               : isReply
-                ? "rely to this comment..."
+                ? "reply to this comment..."
                 : "what are your thoughts..."
           }
           value={formData.content}

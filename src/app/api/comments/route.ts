@@ -1,4 +1,3 @@
-// app/api/comments/route.ts (with global name uniqueness validation)
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { TABLES } from "@/lib/constants";
@@ -10,18 +9,15 @@ const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
 
-// Helper function to build comment tree
 function buildCommentTree(comments: Comment[]): Comment[] {
   const commentMap = new Map<string, Comment>();
   const rootComments: Comment[] = [];
 
-  // First pass: create map and initialize replies array
   comments.forEach((comment) => {
     comment.replies = [];
     commentMap.set(comment.id, comment);
   });
 
-  // Second pass: build tree structure
   comments.forEach((comment) => {
     if (comment.parent_id) {
       const parent = commentMap.get(comment.parent_id);
@@ -82,13 +78,11 @@ export async function POST(request: Request) {
       );
     }
 
-    // Get client IP for rate limiting
     const forwarded = request.headers.get("x-forwarded-for");
     const ip = forwarded
       ? forwarded.split(",")[0]
       : request.headers.get("x-real-ip") || "unknown";
 
-    // Check rate limit by IP and email
     const ipIdentifier = `ip:${ip}`;
     const emailIdentifier = `email:${author_email}`;
 
@@ -109,7 +103,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // Basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(author_email)) {
       return NextResponse.json(
@@ -118,7 +111,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // Basic content length validation
     if (content.length > 1000) {
       return NextResponse.json(
         { error: "Comment too long (max 1000 characters)" },
@@ -126,7 +118,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // Name length validation
     if (author_name.trim().length < 2) {
       return NextResponse.json(
         { error: "Name must be at least 2 characters long" },
@@ -141,7 +132,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // GLOBAL name uniqueness check across ALL posts
     const { data: existingCommentsWithName, error: nameCheckError } =
       await supabase
         .from(TABLES.COMMENTS)
@@ -151,20 +141,16 @@ export async function POST(request: Request) {
 
     if (nameCheckError) {
       console.error("Name check error:", nameCheckError);
-      // Don't fail the request if we can't check names, just log it
     } else if (
       existingCommentsWithName &&
       existingCommentsWithName.length > 0
     ) {
-      // Check if it's the same person (same email) trying to comment again
       const samePersonComment = existingCommentsWithName.find(
         (comment) =>
           comment.author_email.toLowerCase() === author_email.toLowerCase()
       );
 
       if (!samePersonComment) {
-        // Someone else is already using this name globally
-        const firstUsagePost = existingCommentsWithName[0].post_slug;
         return NextResponse.json(
           {
             error: `The name "${author_name.trim()}" is already registered by another user across the blog. Please choose a different name to maintain unique identities.`,
@@ -172,10 +158,7 @@ export async function POST(request: Request) {
           { status: 409 }
         );
       }
-      // If it's the same email, allow them to continue using their established name
     }
-
-    // If this is a reply, verify parent comment exists
     if (parent_id) {
       const { data: parentComment, error: parentError } = await supabase
         .from(TABLES.COMMENTS)
@@ -201,7 +184,8 @@ export async function POST(request: Request) {
           author_email: author_email.trim().toLowerCase(),
           content: content.trim(),
           parent_id: parent_id || null,
-          is_approved: true, // Auto-approve for now
+          // maybe i will add a spam/approval system later
+          is_approved: true,
         },
       ])
       .select()
