@@ -1,11 +1,36 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { TABLES } from "@/lib/constants";
+import { commentRateLimiter } from "@/lib/rate-limit";
+import { Comment } from "@/lib/supabase/types";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
+
+function buildCommentTree(comments: Comment[]): Comment[] {
+  const commentMap = new Map<string, Comment>();
+  const rootComments: Comment[] = [];
+
+  comments.forEach((comment) => {
+    comment.replies = [];
+    commentMap.set(comment.id, comment);
+  });
+
+  comments.forEach((comment) => {
+    if (comment.parent_id) {
+      const parent = commentMap.get(comment.parent_id);
+      if (parent) {
+        parent.replies!.push(comment);
+      }
+    } else {
+      rootComments.push(comment);
+    }
+  });
+
+  return rootComments;
+}
 
 export async function GET(request: Request) {
   try {
@@ -28,7 +53,10 @@ export async function GET(request: Request) {
 
     if (error) throw error;
 
-    return NextResponse.json({ comments: data || [] });
+    const comments = data || [];
+    const threadedComments = buildCommentTree(comments);
+
+    return NextResponse.json({ comments: threadedComments });
   } catch (error) {
     console.error("Get comments error:", error);
     return NextResponse.json(
@@ -40,12 +68,38 @@ export async function GET(request: Request) {
 
 export async function POST(request: Request) {
   try {
-    const { slug, author_name, author_email, content } = await request.json();
+    const { slug, author_name, author_email, content, parent_id } =
+      await request.json();
 
     if (!slug || !author_name || !author_email || !content) {
       return NextResponse.json(
         { error: "All fields are required" },
         { status: 400 }
+      );
+    }
+
+    const forwarded = request.headers.get("x-forwarded-for");
+    const ip = forwarded
+      ? forwarded.split(",")[0]
+      : request.headers.get("x-real-ip") || "unknown";
+
+    const ipIdentifier = `ip:${ip}`;
+    const emailIdentifier = `email:${author_email}`;
+
+    if (
+      commentRateLimiter.isRateLimited(ipIdentifier) ||
+      commentRateLimiter.isRateLimited(emailIdentifier)
+    ) {
+      const remainingTime = Math.max(
+        commentRateLimiter.getRemainingTime(ipIdentifier),
+        commentRateLimiter.getRemainingTime(emailIdentifier)
+      );
+
+      return NextResponse.json(
+        {
+          error: `Rate limit exceeded. Please wait ${Math.ceil(remainingTime / (1000 * 60))} minutes before commenting again.`,
+        },
+        { status: 429 }
       );
     }
 
@@ -64,6 +118,22 @@ export async function POST(request: Request) {
       );
     }
 
+    if (parent_id) {
+      const { data: parentComment, error: parentError } = await supabase
+        .from(TABLES.COMMENTS)
+        .select("id")
+        .eq("id", parent_id)
+        .eq("post_slug", slug)
+        .single();
+
+      if (parentError || !parentComment) {
+        return NextResponse.json(
+          { error: "Parent comment not found" },
+          { status: 400 }
+        );
+      }
+    }
+
     const { data, error } = await supabase
       .from(TABLES.COMMENTS)
       .insert([
@@ -72,6 +142,7 @@ export async function POST(request: Request) {
           author_name: author_name.trim(),
           author_email: author_email.trim(),
           content: content.trim(),
+          parent_id: parent_id || null,
           is_approved: true,
         },
       ])

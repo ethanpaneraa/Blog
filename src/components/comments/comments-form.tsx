@@ -6,10 +6,17 @@ import { Input } from "@/components/ui/input";
 
 interface CommentFormProps {
   slug: string;
+  parentId?: string;
   onCommentAdded?: () => void;
+  isReply?: boolean;
 }
 
-export function CommentForm({ slug, onCommentAdded }: CommentFormProps) {
+export function CommentForm({
+  slug,
+  parentId,
+  onCommentAdded,
+  isReply = false,
+}: CommentFormProps) {
   const [formData, setFormData] = useState({
     author_name: "",
     author_email: "",
@@ -28,18 +35,30 @@ export function CommentForm({ slug, onCommentAdded }: CommentFormProps) {
       const response = await fetch("/api/comments", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ slug, ...formData }),
+        body: JSON.stringify({
+          slug,
+          parent_id: parentId,
+          ...formData,
+        }),
       });
 
       const data = await response.json();
 
-      if (!response.ok) throw new Error(data.error);
+      if (!response.ok) {
+        if (response.status === 429) {
+          setStatus("error");
+          setMessage(data.error);
+          return;
+        }
+        throw new Error(data.error);
+      }
 
       setStatus("success");
-      setMessage("Comment posted successfully!");
+      setMessage(
+        isReply ? "Reply posted successfully!" : "Comment posted successfully!"
+      );
       setFormData({ author_name: "", author_email: "", content: "" });
 
-      // Trigger parent component to refresh comments
       if (onCommentAdded) {
         setTimeout(onCommentAdded, 500);
       }
@@ -51,14 +70,19 @@ export function CommentForm({ slug, onCommentAdded }: CommentFormProps) {
     }
   };
 
+  const formTitle = isReply ? "Reply to Comment" : "Leave a Comment";
+  const buttonText = isReply ? "Post Reply" : "Post Comment";
+
   return (
-    <div className="border-t border-gray-06 pt-8">
-      <h3 className="text-lg font-semibold text-gray-12 mb-4">
-        Leave a Comment
-      </h3>
+    <div className={isReply ? "" : "border-t border-gray-06 pt-8"}>
+      {!isReply && (
+        <h3 className="text-lg font-semibold text-gray-12 mb-4">{formTitle}</h3>
+      )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div
+          className={`grid ${isReply ? "grid-cols-1" : "grid-cols-1 md:grid-cols-2"} gap-4`}
+        >
           <Input
             type="text"
             placeholder="Your name"
@@ -70,27 +94,42 @@ export function CommentForm({ slug, onCommentAdded }: CommentFormProps) {
             className="bg-transparent border border-gray-06 text-gray-12 placeholder:text-gray-10"
             disabled={status === "loading"}
           />
-          <Input
-            type="email"
-            placeholder="Your email (not shown publicly)"
-            value={formData.author_email}
-            onChange={(e) =>
-              setFormData({ ...formData, author_email: e.target.value })
-            }
-            required
-            className="bg-transparent border border-gray-06 text-gray-12 placeholder:text-gray-10"
-            disabled={status === "loading"}
-          />
+          {!isReply && (
+            <Input
+              type="email"
+              placeholder="Your email (not shown publicly)"
+              value={formData.author_email}
+              onChange={(e) =>
+                setFormData({ ...formData, author_email: e.target.value })
+              }
+              required
+              className="bg-transparent border border-gray-06 text-gray-12 placeholder:text-gray-10"
+              disabled={status === "loading"}
+            />
+          )}
+          {isReply && (
+            <Input
+              type="email"
+              placeholder="Your email (not shown publicly)"
+              value={formData.author_email}
+              onChange={(e) =>
+                setFormData({ ...formData, author_email: e.target.value })
+              }
+              required
+              className="bg-transparent border border-gray-06 text-gray-12 placeholder:text-gray-10"
+              disabled={status === "loading"}
+            />
+          )}
         </div>
 
         <textarea
-          placeholder="Your comment..."
+          placeholder={isReply ? "Your reply..." : "Your comment..."}
           value={formData.content}
           onChange={(e) =>
             setFormData({ ...formData, content: e.target.value })
           }
           required
-          rows={4}
+          rows={isReply ? 3 : 4}
           maxLength={1000}
           className="w-full bg-transparent border border-gray-06 text-gray-12 placeholder:text-gray-10 p-3 rounded-md focus:border-gray-8 focus:ring-0 resize-none"
           disabled={status === "loading"}
@@ -105,7 +144,7 @@ export function CommentForm({ slug, onCommentAdded }: CommentFormProps) {
             disabled={status === "loading"}
             className="bg-gray-A03 text-gray-1 hover:bg-gray-A02"
           >
-            {status === "loading" ? "Posting..." : "Post Comment"}
+            {status === "loading" ? "Posting..." : buttonText}
           </Button>
         </div>
 

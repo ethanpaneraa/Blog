@@ -22,4 +22,6 @@ export type Comment = {
   content: string;
   created_at: string;
   is_approved: boolean;
+  parent_id?: string | null;
+  replies?: Comment[];
 };

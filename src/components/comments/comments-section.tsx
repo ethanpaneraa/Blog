@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { CommentList } from "@/components/comments/comments-list";
 import { CommentForm } from "@/components/comments/comments-form";
 
@@ -11,9 +11,9 @@ interface CommentsSectionProps {
 export function CommentsSection({ slug }: CommentsSectionProps) {
   const [refreshKey, setRefreshKey] = useState(0);
 
-  const handleCommentAdded = () => {
+  const handleCommentAdded = useCallback(() => {
     setRefreshKey((prev) => prev + 1);
-  };
+  }, []);
 
   return (
     <section className="mt-16 pt-8 border-t border-gray-06">
