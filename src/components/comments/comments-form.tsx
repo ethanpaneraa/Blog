@@ -158,8 +158,8 @@ export function CommentForm({
     }
   };
 
-  const formTitle = isReply ? "Reply to Comment" : "Leave a Comment";
-  const buttonText = isReply ? "Post Reply" : "Post Comment";
+  const formTitle = isReply ? "reply to comment" : "share your thoughts";
+  const buttonText = isReply ? "share reply" : "share comment";
 
   return (
     <div className={isReply ? "" : "border-t border-gray-06 pt-8"}>
