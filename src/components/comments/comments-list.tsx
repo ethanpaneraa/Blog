@@ -6,6 +6,7 @@ import { CommentForm } from "@/components/comments/comments-form";
 
 interface CommentListProps {
   slug: string;
+  initialComments?: Comment[];
 }
 
 interface CommentItemProps {
@@ -90,13 +91,16 @@ function CommentItem({
   );
 }
 
-export function CommentList({ slug }: CommentListProps) {
-  const [comments, setComments] = useState<Comment[]>([]);
-  const [loading, setLoading] = useState(true);
+export function CommentList({ slug, initialComments = [] }: CommentListProps) {
+  const [comments, setComments] = useState<Comment[]>(initialComments);
+  const [loading, setLoading] = useState(!initialComments.length);
 
   useEffect(() => {
-    fetchComments();
-  }, [slug]);
+    // Only fetch if we don't have initial comments
+    if (!initialComments.length) {
+      fetchComments();
+    }
+  }, [slug, initialComments.length]);
 
   const fetchComments = async () => {
     try {

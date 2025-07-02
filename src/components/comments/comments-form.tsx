@@ -1,4 +1,3 @@
-// components/comment-form.tsx (with global uniqueness messaging)
 "use client";
 
 import { useState, useEffect } from "react";
@@ -21,7 +20,7 @@ interface SavedUserInfo {
 }
 
 const STORAGE_KEY = "blog_comment_user_info";
-const STORAGE_EXPIRY = 30 * 24 * 60 * 60 * 1000; // 30 days
+const STORAGE_EXPIRY = 30 * 24 * 60 * 60 * 1000;
 
 export function CommentForm({
   slug,
@@ -40,8 +39,8 @@ export function CommentForm({
   >("idle");
   const [message, setMessage] = useState("");
   const [showClearOption, setShowClearOption] = useState(false);
+  const [hasSavedInfo, setHasSavedInfo] = useState(false);
 
-  // Load saved user info on component mount
   useEffect(() => {
     loadSavedUserInfo();
   }, []);
@@ -52,17 +51,15 @@ export function CommentForm({
       if (saved) {
         const userInfo: SavedUserInfo = JSON.parse(saved);
         const now = Date.now();
-
-        // Check if saved info hasn't expired
         if (now - userInfo.timestamp < STORAGE_EXPIRY) {
           setFormData((prev) => ({
             ...prev,
             author_name: userInfo.name,
             author_email: userInfo.email,
           }));
-          setShowClearOption(true);
+          // Set that we have saved info, but don't show the banner yet
+          setHasSavedInfo(true);
         } else {
-          // Remove expired data
           localStorage.removeItem(STORAGE_KEY);
         }
       }
@@ -79,7 +76,7 @@ export function CommentForm({
         timestamp: Date.now(),
       };
       localStorage.setItem(STORAGE_KEY, JSON.stringify(userInfo));
-      setShowClearOption(true);
+      setHasSavedInfo(true);
     } catch (error) {
       console.warn("Failed to save user info:", error);
     }
@@ -94,8 +91,16 @@ export function CommentForm({
         author_email: "",
       }));
       setShowClearOption(false);
+      setHasSavedInfo(false);
     } catch (error) {
       console.warn("Failed to clear saved info:", error);
+    }
+  };
+
+  // Show the banner when user focuses on the name field (if they have saved info)
+  const handleNameFieldFocus = () => {
+    if (hasSavedInfo && formData.author_name) {
+      setShowClearOption(true);
     }
   };
 
@@ -130,7 +135,6 @@ export function CommentForm({
         throw new Error(data.error);
       }
 
-      // Save user info to localStorage on successful comment
       saveUserInfo(formData.author_name, formData.author_email);
 
       setStatus("success");
@@ -138,13 +142,11 @@ export function CommentForm({
         isReply ? "Reply posted successfully!" : "Comment posted successfully!"
       );
 
-      // Only clear content, keep name and email
       setFormData((prev) => ({
         ...prev,
         content: "",
       }));
 
-      // Trigger parent component to refresh comments
       if (onCommentAdded) {
         setTimeout(onCommentAdded, 500);
       }
@@ -164,8 +166,6 @@ export function CommentForm({
       {!isReply && (
         <h3 className="text-lg font-semibold text-gray-12 mb-4">{formTitle}</h3>
       )}
-
-      {/* Show context for deep replies */}
       {isReply && replyingTo && (
         <div className="mb-4 p-3 bg-gray-02 border border-gray-04 rounded">
           <div className="flex items-center gap-2 mb-2">
@@ -183,25 +183,6 @@ export function CommentForm({
           </p>
         </div>
       )}
-
-      {/* Show saved info indicator */}
-      {showClearOption && formData.author_name && (
-        <div className="mb-4 p-2 bg-green-900/20 border border-green-700/50 rounded text-sm">
-          <div className="flex items-center justify-between">
-            <span className="text-green-400">
-              ✓ Using your registered name: {formData.author_name}
-            </span>
-            <button
-              type="button"
-              onClick={clearSavedInfo}
-              className="text-green-400 hover:text-green-300 underline text-xs"
-            >
-              Use different name
-            </button>
-          </div>
-        </div>
-      )}
-
       <form onSubmit={handleSubmit} className="space-y-4">
         <div
           className={`grid ${isReply ? "grid-cols-1" : "grid-cols-1 md:grid-cols-2"} gap-4`}
@@ -209,25 +190,25 @@ export function CommentForm({
           <div className="space-y-1">
             <Input
               type="text"
-              placeholder="Your name"
+              placeholder="a name or pseudonym"
               value={formData.author_name}
               onChange={(e) =>
                 setFormData({ ...formData, author_name: e.target.value })
               }
+              onFocus={handleNameFieldFocus}
               required
               className="bg-transparent border border-gray-06 text-gray-12 placeholder:text-gray-10"
               disabled={status === "loading"}
             />
             <p className="text-xs text-gray-09">
-              Your name will be displayed with your comment.You can also use a
+              Your name will be displayed with your comment. You can also use a
               pseudonym.
             </p>
           </div>
-
           {!isReply && (
             <Input
               type="email"
-              placeholder="Your email (not shown publicly)"
+              placeholder="your email (not shown publicly)"
               value={formData.author_email}
               onChange={(e) =>
                 setFormData({ ...formData, author_email: e.target.value })
@@ -251,14 +232,13 @@ export function CommentForm({
             />
           )}
         </div>
-
         <textarea
           placeholder={
             isReply && replyingTo
               ? `Reply to ${replyingTo.author_name}...`
               : isReply
-                ? "Your reply..."
-                : "Your comment..."
+                ? "rely to this comment..."
+                : "what are your thoughts..."
           }
           value={formData.content}
           onChange={(e) =>
@@ -270,7 +250,6 @@ export function CommentForm({
           className="w-full bg-transparent border border-gray-06 text-gray-12 placeholder:text-gray-10 p-3 rounded-md focus:border-gray-8 focus:ring-0 resize-none"
           disabled={status === "loading"}
         />
-
         <div className="flex justify-between items-center">
           <span className="text-sm text-gray-09">
             {formData.content.length}/1000 characters
