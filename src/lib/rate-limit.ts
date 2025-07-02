@@ -30,7 +30,7 @@ class RateLimiter {
     entry.count++;
 
     if (entry.count > this.maxAttempts) {
-      return false;
+      return true;
     }
 
     return false;

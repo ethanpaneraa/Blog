@@ -3,11 +3,14 @@ import { createClient } from "@supabase/supabase-js";
 import { TABLES } from "@/lib/constants";
 import { commentRateLimiter } from "@/lib/rate-limit";
 import { Comment } from "@/lib/supabase/types";
+import { Resend } from "resend";
 
 const supabase = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
 );
+
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 function buildCommentTree(comments: Comment[]): Comment[] {
   const commentMap = new Map<string, Comment>();
@@ -30,6 +33,77 @@ function buildCommentTree(comments: Comment[]): Comment[] {
   });
 
   return rootComments;
+}
+
+async function sendCommentNotification(
+  comment: Comment,
+  postSlug: string,
+  isReply: boolean = false
+) {
+  try {
+    if (
+      !process.env.RESEND_API_KEY ||
+      !process.env.EMAIL_FROM ||
+      !process.env.ADMIN_EMAIL
+    ) {
+      console.log("Email notification skipped - missing environment variables");
+      return;
+    }
+
+    const postUrl = `${process.env.NEXT_PUBLIC_APP_URL}/writing/${postSlug}`;
+    const commentType = isReply ? "reply" : "comment";
+
+    const emailHtml = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="utf-8">
+          <style>
+            body { font-family: 'Geist Mono', monospace; background-color: #111110; color: #b5b3ad; margin: 0; padding: 20px; }
+            .container { max-width: 600px; margin: 0 auto; background: #191918; border: 1px solid #3b3a37; padding: 30px; }
+            .header { font-size: 20px; margin-bottom: 20px; color: #eeeeec; }
+            .comment-box { background: #222221; border-left: 3px solid #b5b3ad; padding: 15px; margin: 20px 0; }
+            .meta { color: #6f6d66; font-size: 14px; margin-bottom: 10px; }
+            .content { color: #b5b3ad; line-height: 1.6; white-space: pre-wrap; }
+            .actions { margin-top: 30px; }
+            .button { background: #b5b3ad; color: #111110; padding: 10px 20px; text-decoration: none; display: inline-block; }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <div class="header">
+              new ${commentType} on ethanpinedaa.blog
+            </div>
+
+            <div class="meta">
+              <strong>Post:</strong> ${postSlug}<br>
+              <strong>Author:</strong> ${comment.author_name}<br>
+              <strong>Time:</strong> ${new Date(comment.created_at).toLocaleString()}
+            </div>
+
+            <div class="comment-box">
+              <div class="content">${comment.content}</div>
+            </div>
+
+            <div class="actions">
+              <a href="${postUrl}" class="button">View ${commentType}</a>
+            </div>
+          </div>
+        </body>
+      </html>
+    `;
+
+    await resend.emails.send({
+      from: process.env.EMAIL_FROM,
+      to: process.env.ADMIN_EMAIL,
+      subject: `💬 New ${commentType} on "${postSlug}"`,
+      html: emailHtml,
+    });
+
+    console.log(`Email notification sent for ${commentType} on ${postSlug}`);
+  } catch (error) {
+    console.error("Failed to send comment notification email:", error);
+  }
 }
 
 export async function GET(request: Request) {
@@ -159,6 +233,7 @@ export async function POST(request: Request) {
         );
       }
     }
+
     if (parent_id) {
       const { data: parentComment, error: parentError } = await supabase
         .from(TABLES.COMMENTS)
@@ -184,7 +259,6 @@ export async function POST(request: Request) {
           author_email: author_email.trim().toLowerCase(),
           content: content.trim(),
           parent_id: parent_id || null,
-          // maybe i will add a spam/approval system later
           is_approved: true,
         },
       ])
@@ -192,6 +266,10 @@ export async function POST(request: Request) {
       .single();
 
     if (error) throw error;
+
+    sendCommentNotification(data, slug, !!parent_id).catch((error) => {
+      console.error("Email notification failed:", error);
+    });
 
     return NextResponse.json({
       success: true,
