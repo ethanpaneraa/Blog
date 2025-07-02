@@ -38,7 +38,7 @@ export function CommentForm({
     "idle" | "loading" | "success" | "error"
   >("idle");
   const [message, setMessage] = useState("");
-  // eslint-disable-next-line typescript/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [showClearOption, setShowClearOption] = useState(false);
   const [hasSavedInfo, setHasSavedInfo] = useState(false);
 
