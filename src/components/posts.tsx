@@ -7,9 +7,10 @@ import { PostItem } from "@/components/post-item";
 
 type PostsProps = {
   posts: MDXFileData[];
+  viewCounts: Record<string, number>;
 };
 
-export function Posts({ posts }: PostsProps) {
+export function Posts({ posts, viewCounts }: PostsProps) {
   const [isSearching, setIsSearching] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -61,8 +62,8 @@ export function Posts({ posts }: PostsProps) {
               ? prev + 1
               : prev
             : prev > 0
-            ? prev - 1
-            : prev;
+              ? prev - 1
+              : prev;
 
           scrollSelectedIntoView();
           return newIndex;
@@ -114,6 +115,7 @@ export function Posts({ posts }: PostsProps) {
             <PostItem
               post={item}
               isSelected={isSearching && index === selectedIndex}
+              viewCount={viewCounts[item.slug] || 0}
             />
           </div>
         ))}

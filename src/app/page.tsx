@@ -3,7 +3,7 @@ import { WritingSection } from "@/components/writing-section";
 import { NewsletterForm } from "@/components/newsletter-form";
 import MainNav from "@/components/navigation-bar";
 
-export default function Page() {
+export default async function Page() {
   return (
     <>
       <main className="motion-safe:animate-fade">

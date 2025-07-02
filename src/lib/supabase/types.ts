@@ -5,3 +5,11 @@ export type Subscriber = {
   verified: boolean;
   verification_token?: string;
 };
+
+export type ViewCount = {
+  id: string;
+  post_slug: string;
+  view_count: number;
+  created_at: string;
+  updated_at: string;
+};

@@ -54,7 +54,7 @@ export default function Header() {
         .
       </p>
 
-      <div className="space-y-4 text-gray-11 text-base">
+      <div className="text-gray-11 text-base">
         <p>
           This blog is a place and medium for me to share my thoughts,
           experiences, and projects. I hope to use this blog as a way to
@@ -64,7 +64,7 @@ export default function Header() {
           how I think and what I do.
         </p>
         <br />
-        <p className="text-gray-11 text-base italic">
+        <p className="text-gray-11 text-base">
           What is discussed and mentioned in this blog is not necessarily
           representative of my employers, or any other organization I am
           affiliated with or worked with.
