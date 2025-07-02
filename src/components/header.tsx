@@ -28,7 +28,7 @@ export default function Header() {
         </StyledLinkWithIcon>
         ,{" "}
         <StyledLinkWithIcon
-          href="https://twitter.com/ethanpineda"
+          href="https://x.com/EthanPaneraa"
           className="text-base"
         >
           twitter
