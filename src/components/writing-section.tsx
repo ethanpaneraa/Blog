@@ -11,7 +11,7 @@ const posts = getPosts()
   )
   .slice(0, 4);
 
-export function WritingSection() {
+export async function WritingSection() {
   if (posts.length === 0) {
     return (
       <section className="mb-12 w-full animate-fade-in-up">
@@ -23,20 +23,22 @@ export function WritingSection() {
     );
   }
 
-  const viewCountsForAllPosts = Promise.all(
-    posts.map((post) => getViewCount(post.slug))
-  );
-
-  const viewCounts = viewCountsForAllPosts
-    .then((counts) => counts)
-    .catch(() => posts.map(() => 0)); // Fallback to 0 if there's an error
+  let viewCounts: number[];
+  try {
+    viewCounts = await Promise.all(
+      posts.map((post) => getViewCount(post.slug))
+    );
+  } catch (error) {
+    console.error("Error fetching view counts:", error);
+    viewCounts = posts.map(() => 0);
+  }
 
   return (
-    <section className=" w-full animate-fade-in-up">
+    <section className="mb-12 w-full animate-fade-in-up">
       <h2 className="mb-4 flex items-center font-semibold text-gray-12 text-lg">
         pieces
       </h2>
-      <div className="space-y-4">
+      <div className="space-y-3">
         {posts.map((post, index) => (
           <div
             key={index}
