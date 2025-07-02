@@ -1,5 +1,6 @@
 import { PostsList } from "@/components/post-list";
 import { getPosts } from "@/lib/blog";
+import { getViewCount } from "@/lib/get-view-count";
 import { Metadata } from "next";
 import MainNav from "@/components/navigation-bar";
 
@@ -9,6 +10,27 @@ const posts = getPosts().sort(
 );
 
 export default async function WritingPage() {
+  // Fetch view counts for all posts
+  let viewCounts: Record<string, number> = {};
+  try {
+    const counts = await Promise.all(
+      posts.map((post) => getViewCount(post.slug))
+    );
+
+    // Create a map of slug -> view count for easy lookup
+    viewCounts = posts.reduce(
+      (acc, post, index) => {
+        acc[post.slug] = counts[index] || 0;
+        return acc;
+      },
+      {} as Record<string, number>
+    );
+  } catch (error) {
+    console.error("Error fetching view counts:", error);
+    // Fallback to empty object (0 views for all)
+    viewCounts = {};
+  }
+
   return (
     <>
       <div className="motion-safe:animate-fade">
@@ -40,7 +62,7 @@ export default async function WritingPage() {
             to navigate
           </p>
 
-          <PostsList posts={posts} />
+          <PostsList posts={posts} viewCounts={viewCounts} />
         </main>
       </div>
     </>

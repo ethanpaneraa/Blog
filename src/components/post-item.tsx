@@ -4,9 +4,10 @@ import Link from "next/link";
 type PostItemProps = {
   post: MDXFileData;
   isSelected?: boolean;
+  viewCount?: number;
 };
 
-export function PostItem({ post, isSelected }: PostItemProps) {
+export function PostItem({ post, isSelected, viewCount = 0 }: PostItemProps) {
   return (
     <div
       className={`flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-4 group ${
@@ -31,6 +32,9 @@ export function PostItem({ post, isSelected }: PostItemProps) {
               year: "numeric",
             })
             .toLowerCase()}
+        </span>
+        <span className="ml-2">
+          | {viewCount} {viewCount === 1 ? "view" : "views"}
         </span>
       </div>
     </div>

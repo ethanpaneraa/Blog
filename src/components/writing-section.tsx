@@ -30,6 +30,7 @@ export async function WritingSection() {
     );
   } catch (error) {
     console.error("Error fetching view counts:", error);
+
     viewCounts = posts.map(() => 0);
   }
 
