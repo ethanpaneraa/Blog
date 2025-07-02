@@ -3,12 +3,14 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Comment } from "@/lib/supabase/types";
 
 interface CommentFormProps {
   slug: string;
   parentId?: string;
   onCommentAdded?: () => void;
   isReply?: boolean;
+  replyingTo?: Comment;
 }
 
 export function CommentForm({
@@ -16,6 +18,7 @@ export function CommentForm({
   parentId,
   onCommentAdded,
   isReply = false,
+  replyingTo,
 }: CommentFormProps) {
   const [formData, setFormData] = useState({
     author_name: "",
@@ -59,6 +62,7 @@ export function CommentForm({
       );
       setFormData({ author_name: "", author_email: "", content: "" });
 
+      // Trigger parent component to refresh comments
       if (onCommentAdded) {
         setTimeout(onCommentAdded, 500);
       }
@@ -77,6 +81,23 @@ export function CommentForm({
     <div className={isReply ? "" : "border-t border-gray-06 pt-8"}>
       {!isReply && (
         <h3 className="text-lg font-semibold text-gray-12 mb-4">{formTitle}</h3>
+      )}
+      {isReply && replyingTo && (
+        <div className="mb-4 p-3 bg-gray-02 border border-gray-04 rounded">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="text-gray-09 text-sm">Replying to</span>
+            <span className="font-medium text-gray-11">
+              {replyingTo.author_name}:
+            </span>
+          </div>
+          <p className="text-gray-10 text-sm italic">
+            "
+            {replyingTo.content.length > 150
+              ? replyingTo.content.substring(0, 150) + "..."
+              : replyingTo.content}
+            "
+          </p>
+        </div>
       )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
@@ -123,7 +144,13 @@ export function CommentForm({
         </div>
 
         <textarea
-          placeholder={isReply ? "Your reply..." : "Your comment..."}
+          placeholder={
+            isReply && replyingTo
+              ? `Reply to ${replyingTo.author_name}...`
+              : isReply
+                ? "Your reply..."
+                : "Your comment..."
+          }
           value={formData.content}
           onChange={(e) =>
             setFormData({ ...formData, content: e.target.value })
