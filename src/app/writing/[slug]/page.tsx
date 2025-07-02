@@ -4,6 +4,7 @@ import { getPostBySlug, getPosts } from "@/lib/blog";
 import { getViewCount } from "@/lib/get-view-count";
 import MainNav from "@/components/navigation-bar";
 import { ViewCounter } from "@/components/view-counter";
+import { CommentsSection } from "@/components/comments/comments-section";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -104,6 +105,9 @@ export default async function Post({ params }: PageProps) {
           <article className="prose prose-invert max-w-none prose-headings:text-white prose-a:text-white hover:prose-a:underline">
             <MDX source={post.content} />
           </article>
+
+          {/* Comments Section */}
+          <CommentsSection slug={slug} />
         </section>
       </div>
     </>

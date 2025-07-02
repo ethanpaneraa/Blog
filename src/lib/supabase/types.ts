@@ -13,3 +13,13 @@ export type ViewCount = {
   created_at: string;
   updated_at: string;
 };
+
+export type Comment = {
+  id: string;
+  post_slug: string;
+  author_name: string;
+  author_email: string;
+  content: string;
+  created_at: string;
+  is_approved: boolean;
+};
