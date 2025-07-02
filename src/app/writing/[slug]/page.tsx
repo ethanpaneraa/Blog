@@ -1,7 +1,9 @@
 import { notFound } from "next/navigation";
 import { MDX } from "./mdx";
 import { getPostBySlug, getPosts } from "@/lib/blog";
+import { getViewCount } from "@/lib/get-view-count";
 import MainNav from "@/components/navigation-bar";
+import { ViewCounter } from "@/components/view-counter";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -58,6 +60,8 @@ export default async function Post({ params }: PageProps) {
     notFound();
   }
 
+  const initialViewCount = await getViewCount(slug);
+
   return (
     <>
       <div className="motion-safe:animate-fade">
@@ -91,7 +95,10 @@ export default async function Post({ params }: PageProps) {
           </h1>
 
           <div className="mb-8 flex items-center justify-between text-sm text-gray-400">
-            <span>{formatDate(post.metadata.date)}</span>
+            <div className="flex items-center gap-2">
+              <span>{formatDate(post.metadata.date)}</span>
+              <ViewCounter slug={slug} initialCount={initialViewCount} />
+            </div>
           </div>
 
           <article className="prose prose-invert max-w-none prose-headings:text-white prose-a:text-white hover:prose-a:underline">
