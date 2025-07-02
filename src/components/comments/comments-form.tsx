@@ -8,7 +8,7 @@ import { Comment } from "@/lib/supabase/types";
 interface CommentFormProps {
   slug: string;
   parentId?: string;
-  onCommentAdded?: () => void;
+  onCommentAdded?: (newComment?: Comment) => void;
   isReply?: boolean;
   replyingTo?: Comment;
 }
@@ -38,7 +38,7 @@ export function CommentForm({
     "idle" | "loading" | "success" | "error"
   >("idle");
   const [message, setMessage] = useState("");
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line typescript/no-unused-vars
   const [showClearOption, setShowClearOption] = useState(false);
   const [hasSavedInfo, setHasSavedInfo] = useState(false);
 
@@ -58,7 +58,6 @@ export function CommentForm({
             author_name: userInfo.name,
             author_email: userInfo.email,
           }));
-          // Set that we have saved info, but don't show the banner yet
           setHasSavedInfo(true);
         } else {
           localStorage.removeItem(STORAGE_KEY);
@@ -133,7 +132,13 @@ export function CommentForm({
       }));
 
       if (onCommentAdded) {
-        setTimeout(onCommentAdded, 500);
+        // For top-level comments, pass the new comment data
+        // For replies, just trigger a refetch (pass undefined)
+        if (!isReply && data.comment) {
+          setTimeout(() => onCommentAdded(data.comment), 500);
+        } else {
+          setTimeout(() => onCommentAdded(), 500);
+        }
       }
     } catch (error) {
       setStatus("error");

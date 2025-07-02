@@ -14,17 +14,39 @@ export function CommentsSection({
   slug,
   initialComments = [],
 }: CommentsSectionProps) {
-  const [refreshKey, setRefreshKey] = useState(0);
+  const [comments, setComments] = useState<Comment[]>(initialComments);
 
-  const handleCommentAdded = useCallback(() => {
-    setRefreshKey((prev) => prev + 1);
+  const handleCommentAdded = useCallback((newComment?: Comment) => {
+    if (newComment) {
+      setComments((prevComments) => [newComment, ...prevComments]);
+    } else {
+      fetchComments();
+    }
   }, []);
+
+  const handleReplyAdded = useCallback(() => {
+    fetchComments();
+  }, []);
+
+  const fetchComments = async () => {
+    try {
+      const response = await fetch(`/api/comments?slug=${slug}`);
+      const data = await response.json();
+      if (data.comments) {
+        setComments(data.comments);
+      }
+    } catch (error) {
+      console.error("Error fetching comments:", error);
+    }
+  };
 
   return (
     <section className="mt-16 pt-8 border-t border-gray-06">
-      <div key={refreshKey}>
-        <CommentList slug={slug} initialComments={initialComments} />
-      </div>
+      <CommentList
+        slug={slug}
+        comments={comments}
+        onReplyAdded={handleReplyAdded}
+      />
       <div className="mt-8">
         <CommentForm slug={slug} onCommentAdded={handleCommentAdded} />
       </div>

@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Comment } from "@/lib/supabase/types";
 import { CommentForm } from "@/components/comments/comments-form";
 
 interface CommentListProps {
   slug: string;
-  initialComments?: Comment[];
+  comments: Comment[];
+  onReplyAdded: () => void;
 }
 
 interface CommentItemProps {
@@ -68,12 +69,11 @@ function CommentItem({
               parentId={comment.id}
               onCommentAdded={handleReplyAdded}
               isReply={true}
+              replyingTo={comment}
             />
           </div>
         )}
       </div>
-
-      {/* Render replies */}
       {comment.replies && comment.replies.length > 0 && (
         <div className="space-y-4">
           {comment.replies.map((reply) => (
@@ -91,31 +91,11 @@ function CommentItem({
   );
 }
 
-export function CommentList({ slug, initialComments = [] }: CommentListProps) {
-  const [comments, setComments] = useState<Comment[]>(initialComments);
-  const [loading, setLoading] = useState(!initialComments.length);
-
-  useEffect(() => {
-    // Only fetch if we don't have initial comments
-    if (!initialComments.length) {
-      fetchComments();
-    }
-  }, [slug, initialComments.length]);
-
-  const fetchComments = async () => {
-    try {
-      const response = await fetch(`/api/comments?slug=${slug}`);
-      const data = await response.json();
-      if (data.comments) {
-        setComments(data.comments);
-      }
-    } catch (error) {
-      console.error("Error fetching comments:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
+export function CommentList({
+  slug,
+  comments,
+  onReplyAdded,
+}: CommentListProps) {
   const getTotalCommentCount = (comments: Comment[]): number => {
     return comments.reduce((total, comment) => {
       return (
@@ -125,10 +105,6 @@ export function CommentList({ slug, initialComments = [] }: CommentListProps) {
       );
     }, 0);
   };
-
-  if (loading) {
-    return <div className="text-gray-400 text-sm">Loading comments...</div>;
-  }
 
   const totalComments = getTotalCommentCount(comments);
 
@@ -151,7 +127,7 @@ export function CommentList({ slug, initialComments = [] }: CommentListProps) {
             key={comment.id}
             comment={comment}
             slug={slug}
-            onReplyAdded={fetchComments}
+            onReplyAdded={onReplyAdded}
           />
         ))}
       </div>
